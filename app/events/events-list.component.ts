@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { EventService } from './shared/event.service'
+import { ToastrService } from '../common/toastr.service'
 
 @Component({
     selector: 'events-list',
@@ -11,7 +12,7 @@ import { EventService } from './shared/event.service'
         
         <div class="row">
             <div *ngFor="let e of events" class="col-md-5">
-                <event-thumbnail #thumbnail (eventClick)="handleEventClicked($event)"
+                <event-thumbnail (click)="handleThumbnailClicked(e.name)"
                  [event] = "e"></event-thumbnail>
 
             </div>
@@ -22,12 +23,13 @@ import { EventService } from './shared/event.service'
 export class EventsListComponent implements OnInit {
     events:any[]
 
-    constructor (private eventService: EventService) {
+    //Remember that this 'private' business in TypeScript is short hand for defining and setting a local var
+    constructor (private eventService: EventService, private toastrService: ToastrService) {
         
     }
 
-    handleEventClicked(data) {
-        console.log("recieved: ", data);
+    handleThumbnailClicked(eventName) {
+        this.toastrService.success(eventName);
     }
 
     ngOnInit() {
