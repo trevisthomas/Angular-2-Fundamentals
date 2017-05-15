@@ -7,6 +7,11 @@ export class EventService {
 
         return EVENTS
     }
+
+    getEvent(id: Number){
+        //Hm.  Closure syntax in TS?
+        return EVENTS.find(event => event.id === id)
+    }
 }
 
 const EVENTS = [
