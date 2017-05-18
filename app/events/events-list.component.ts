@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { EventService } from './shared/event.service'
 import { ToastrService } from '../common/toastr.service'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
     template: `
@@ -21,7 +22,9 @@ export class EventsListComponent implements OnInit {
     events:any
 
     //Remember that this 'private' business in TypeScript is short hand for defining and setting a local var
-    constructor (private eventService: EventService, private toastrService: ToastrService) {
+    constructor (private eventService: EventService, 
+                 private toastrService: ToastrService,
+                 private router: ActivatedRoute) {
         
     }
 
@@ -30,7 +33,7 @@ export class EventsListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.eventService.getEvents().subscribe(events => { this.events = events})
+        this.events = this.router.snapshot.data['events']
     }
 
 }

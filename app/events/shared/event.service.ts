@@ -7,7 +7,7 @@ export class EventService {
         console.log('getEvents called')
 
         let subject = new Subject() //An observable from rxjs
-        setTimeout(() => { subject.next(EVENTS); subject.complete(); } , 6000)
+        setTimeout(() => { subject.next(EVENTS); subject.complete(); } , 100)
 
         return subject
     }
