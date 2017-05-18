@@ -18,7 +18,7 @@ import { ToastrService } from '../common/toastr.service'
 `
 })
 export class EventsListComponent implements OnInit {
-    events:any[]
+    events:any
 
     //Remember that this 'private' business in TypeScript is short hand for defining and setting a local var
     constructor (private eventService: EventService, private toastrService: ToastrService) {
@@ -30,7 +30,7 @@ export class EventsListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.events = this.eventService.getEvents()
+        this.eventService.getEvents().subscribe(events => { this.events = events})
     }
 
 }
