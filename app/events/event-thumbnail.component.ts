@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { IEvent } from './shared/event.model'
 
 /*Note: You can also hide things like this: <div [hidden] = "!event?.onlineUrl"> 
 this allows you to use html to show and hide, as opposed to using *ngIf which 
@@ -37,7 +38,7 @@ removes the entire element from the dom completely.
     `]
 })
 export class EventThumbnailComponent {
-    @Input() event : any //Typescript varible declaration
+    @Input() event : IEvent //Typescript varible declaration
     @Output() eventClick = new EventEmitter()
 
     someProperty:any = "Some message"
