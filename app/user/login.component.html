@@ -1,19 +1,22 @@
 <h1>Login</h1>
 <hr>
 <div class="col-md-4">
-  <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)"  autocomplete="off" >
-    <div class="form-group" >
-      <label for="userName">User Name:</label>
-
-      <!--Remember [(ngModel)] would do two way binding-->
-      <input id="userName" (ngModel)="userName" name="userName" type="text" class="form-control" placeholder="User Name..." />
-    </div>
-    <div class="form-group" >
-      <label for="password">Password:</label>
-      <input id="password" (ngModel)="password" name="password" type="password" class="form-control"placeholder="Password..." />
-    </div>
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" autocomplete="off" novalidate>
         
-    <button type="submit" class="btn btn-primary">Login</button>
-    <button type="button" (click)="cancel()" class="btn btn-default">Cancel</button>
-  </form>
+        <div class="form-group">
+            <label for="userName">User Name:</label><em *ngIf="loginForm.controls.userName?.invalid && (loginForm.controls.userName.touched || mouseOverSubmit)" >Required</em>
+            <input id="userName" required (ngModel)="userName" name="userName" type="text" class="form-control" placeholder="User Name..."
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label><em *ngIf="loginForm.controls.password?.invalid && (loginForm.controls.password.touched || mouseOverSubmit)" >Required</em>
+            <input id="password" required (ngModel)="password" name="password" type="password" class="form-control" placeholder="Password..."
+            />
+        </div>
+        <span (mouseenter)="mouseOverSubmit=true" (mouseleave)="mouseOverSubmit=false">
+        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
+        </span>
+        <button type="button" (click)="cancel()" class="btn btn-default">Cancel</button>
+    </form>
 </div>
