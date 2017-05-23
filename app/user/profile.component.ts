@@ -1,18 +1,34 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { AuthService } from './auth.service'
+import { FormControl, FormGroup } from '@angular/forms'
 
 @Component({
-  template: `
-    <h1>Edit Your Profile</h1>
-    <hr>
-    <div class="col-md-6">
-      <h3>[Edit profile form will go here]</h3>
-      <br />
-      <br />
-      <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-default">Cancel</button>
-    </div>
-  `,
+  templateUrl: 'app/user/profile.component.html',
 })
-export class ProfileComponent {
-       
+export class ProfileComponent implements OnInit {
+  profileForm: FormGroup //Class scope group was needed so that we can access the controls from html
+
+  constructor(private authService : AuthService, private router: Router) {
+
+  }
+
+  ngOnInit() { //Notice, he didnt do this in the template based form, only the reactive one
+    let firstName = new FormControl(this.authService.currentUser.firstName)
+
+    let lastName = new FormControl(this.authService.currentUser.lastName)
+
+    this.profileForm = new FormGroup({
+      firstName: firstName,
+      lastName: lastName
+    })
+  }
+  cancel(){
+    this.router.navigate(['events'])
+  }
+
+  saveProfile(formValues){
+    this.authService.updateCurrentUser(formValues.firstName, formValues.lastName)
+    this.router.navigate(['events'])
+  }
 }
