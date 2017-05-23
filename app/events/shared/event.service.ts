@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core'
-import { Subject } from 'rxjs/RX'
+import { Subject, Observable } from 'rxjs/RX'
 import { IEvent } from './event.model'
 
 @Injectable()
 export class EventService {
-    getEvents(){
+    getEvents(): Observable<[IEvent]>{
         console.log('getEvents called')
 
-        let subject = new Subject() //An observable from rxjs
+        let subject = new Subject<[IEvent]>() //An observable from rxjs
         setTimeout(() => { subject.next(EVENTS); subject.complete(); } , 100)
 
         return subject
     }
 
-    getEvent(id: Number){
+    getEvent(id: Number): IEvent{
         //Hm.  Closure syntax in TS?
         return EVENTS.find(event => event.id === id)
     }

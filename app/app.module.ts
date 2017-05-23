@@ -17,6 +17,7 @@ import { NavBarComponent } from './nav/navbar.component'
 import { ToastrService } from './common/toastr.service'
 import { appRoutes } from './routes'
 import { Error404Component } from './errors/404.component'
+import { AuthService } from './user/auth.service'
 
 @NgModule({
     imports: [
@@ -40,6 +41,7 @@ import { Error404Component } from './errors/404.component'
             useValue: checkDirtyState
         },
         EventListResolver,
+        AuthService, //Notie that services providers can be registered at the app level even if they are defined in a sub module.  Note that this is only true for providers, not imports or declarations
     ],
     bootstrap: [EventsAppComponent]
 })
