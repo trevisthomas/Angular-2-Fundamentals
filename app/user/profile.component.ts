@@ -23,10 +23,10 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() { //Notice, he didnt do this in the template based form, only the reactive one
     let firstName = new FormControl(this.authService.currentUser.firstName,
-      Validators.required)
+      [Validators.required, Validators.pattern('[a-zA-Z].*')])
 
     let lastName = new FormControl(this.authService.currentUser.lastName,
-      Validators.required)
+      [Validators.required, Validators.pattern('[a-zA-Z].*')])
 
     this.profileForm = new FormGroup({
       firstName: firstName,
