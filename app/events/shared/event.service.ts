@@ -17,6 +17,13 @@ export class EventService {
         //Hm.  Closure syntax in TS?
         return EVENTS.find(event => event.id === id)
     }
+
+    saveEvent(event: IEvent) {
+        event.id = 999
+        event.sessions = []
+        EVENTS.push(event)
+        console.log("Saving: " + event)
+    }
 }
 
 const EVENTS: [IEvent] = [

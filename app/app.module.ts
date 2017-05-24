@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import {
     EventsListComponent,
@@ -22,7 +23,9 @@ import { AuthService } from './user/auth.service'
 @NgModule({
     imports: [
         BrowserModule,
-        RouterModule.forRoot(appRoutes)],
+        RouterModule.forRoot(appRoutes),
+        FormsModule, ReactiveFormsModule],
+        
     declarations: [
         EventsAppComponent,
         EventsListComponent,
