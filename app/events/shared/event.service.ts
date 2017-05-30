@@ -24,6 +24,11 @@ export class EventService {
         EVENTS.push(event)
         console.log("Saving: " + event)
     }
+
+    updateEvent(event) {
+        let index = EVENTS.findIndex(x => x.id = event.id)
+        EVENTS[index] = event        
+    }
 }
 
 const EVENTS: [IEvent] = [
