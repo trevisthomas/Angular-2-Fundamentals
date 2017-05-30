@@ -16,21 +16,23 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup //Class scope group was needed so that we can access the controls from html
-  
+  firstName: FormControl
+  lastName: FormControl  
+
   constructor(private authService : AuthService, private router: Router) {
 
   }
 
   ngOnInit() { //Notice, he didnt do this in the template based form, only the reactive one
-    let firstName = new FormControl(this.authService.currentUser.firstName,
+    this.firstName = new FormControl(this.authService.currentUser.firstName,
       [Validators.required, Validators.pattern('[a-zA-Z].*')])
 
-    let lastName = new FormControl(this.authService.currentUser.lastName,
+    this.lastName = new FormControl(this.authService.currentUser.lastName,
       [Validators.required, Validators.pattern('[a-zA-Z].*')])
 
     this.profileForm = new FormGroup({
-      firstName: firstName,
-      lastName: lastName
+      firstName: this.firstName,
+      lastName: this.lastName
     })
   }
   cancel(){
@@ -45,12 +47,12 @@ export class ProfileComponent implements OnInit {
   }
 
   validateLastName(){
-    return this.profileForm.controls.lastName.valid ||
-    this.profileForm.controls.lastName.untouched
+    return this.lastName.valid ||
+    this.lastName.untouched
   }
 
   validateFirstName(){
-    return this.profileForm.controls.firstName.valid ||
-    this.profileForm.controls.firstName.untouched
+    return this.firstName.valid ||
+    this.firstName.untouched
   }
 }
