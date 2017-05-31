@@ -9,8 +9,8 @@ removes the entire element from the dom completely.
     selector: 'event-thumbnail',
     template: `
         <div [routerLink]="['/events', event.id]" class="well hoverwell thumbnail">
-            <h2>{{event.name}}</h2>
-            <div>Date: {{event?.date}}</div>
+            <h2>{{event.name | uppercase}}</h2>
+            <div>Date: {{event?.date | date:'shortDate'}}</div>
 
             <div [ngClass] = "getStartTimeClass()" [ngSwitch] = "event?.time">
                 Time: {{event?.time}}
@@ -18,7 +18,7 @@ removes the entire element from the dom completely.
                 <span *ngSwitchCase="'10:00 am'">(Late Start)</span>
                 <span *ngSwitchDefault>(Normal Start)</span>
             </div>
-            <div>Price: \${{event?.price}}</div>
+            <div>Price: {{ event?.price | currency:'USD':true }}</div>
             <div *ngIf="event?.location">
                 <span>Location: {{event?.location?.address}}</span>
                 <span class="pad-left"></span>
@@ -28,7 +28,7 @@ removes the entire element from the dom completely.
                 <span>Online URL: {{event?.onlineUrl}}</span>
             </div>
         </div>
-    `, 
+    `, // the "currency:'USD':true" tells it to use us dollars and the boolean says to show the symbplic $ not USD and s
     styles : [`
         .green {color: green; !important;}
         .bold {font-weight: bold;}
