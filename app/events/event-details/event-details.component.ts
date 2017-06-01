@@ -15,6 +15,7 @@ import {  } from ''
 export class EventDetailsComponent implements OnInit  {
     event:any
     addMode: Boolean = false
+    filterBy: string = 'all'
 
     constructor(private eventService: EventService, 
                 private activatedRoute: ActivatedRoute) {
@@ -45,5 +46,6 @@ export class EventDetailsComponent implements OnInit  {
     performCancel() {
         this.addMode = false
     }
+    
     
 }
