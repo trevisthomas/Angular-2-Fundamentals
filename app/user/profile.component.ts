@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthService } from './auth.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { TOASTR_TOKEN, Toastr } from '../common/toastr.service'
 
 @Component({
   templateUrl: 'app/user/profile.component.html',
@@ -19,8 +20,9 @@ export class ProfileComponent implements OnInit {
   firstName: FormControl
   lastName: FormControl  
 
-  constructor(private authService : AuthService, private router: Router) {
-
+  constructor(private authService : AuthService, 
+    private router: Router,
+    @Inject(TOASTR_TOKEN) private toastrService : Toastr ) {
   }
 
   ngOnInit() { //Notice, he didnt do this in the template based form, only the reactive one
@@ -40,9 +42,12 @@ export class ProfileComponent implements OnInit {
   }
 
   saveProfile(formValues){
+    console.log(formValues);
+
     if( this.profileForm.valid ) {
       this.authService.updateCurrentUser(formValues.firstName, formValues.lastName)
-      this.router.navigate(['events'])
+      this.toastrService.success("Profile Saved")
+      // this.router.navigate(['events'])
     }
   }
 
