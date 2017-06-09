@@ -58,7 +58,11 @@ declare let toastr
             provide: 'canDeactivateCreateEvent',
             useValue: checkDirtyState
         },
-        EventListResolver,
+        { //Note! This long hand way allows you to return a different class instance than the Provide.  He gave an example of using a specific logger, like FileLogger
+            provide: EventListResolver,
+            useClass: EventListResolver
+        }
+        ,
         AuthService, //Notie that services providers can be registered at the app level even if they are defined in a sub module.  Note that this is only true for providers, not imports or declarations
     ],
     bootstrap: [EventsAppComponent]
