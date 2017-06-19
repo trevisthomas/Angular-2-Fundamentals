@@ -2,6 +2,8 @@ import { Component } from '@angular/core'
 import { AuthService } from '../user/auth.service'
 import { ISession } from '../events/shared/event.model'
 import { EventService } from '../events/index'
+import { SimpleModalComponent } from '../common/index'
+import { ModalTriggerDirective } from '../common/index'
 
 @Component({
     selector: 'nav-bar',
@@ -24,7 +26,6 @@ export class NavBarComponent {
         this.eventService.searchSessions(searchTerm).subscribe( sessions => {
             this.foundSessions = sessions
 
-            console.log(this.foundSessions)
         })
     }
 }
