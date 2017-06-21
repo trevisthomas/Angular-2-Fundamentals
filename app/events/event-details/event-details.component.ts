@@ -26,11 +26,10 @@ export class EventDetailsComponent implements OnInit  {
         
         //In order to re-reoute to this page from this page with a new id, you need to subscribe to the parameter's to be notified when the parameter changes!
         this.activatedRoute.params.forEach((params: Params) => {
-            console.log("Paramz: " + params)
             this.event = this.eventService.getEvent(+params['id'])
             this.addMode = false
         })
-        //I dont understand what is going on above with this callback.  Why is the for each necessary?
+        //I dont fully understand what is going on above with this callback.  Why is the for each necessary?
 
         
     }
