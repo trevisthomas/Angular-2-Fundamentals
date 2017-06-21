@@ -29,12 +29,14 @@ export class SimpleModalComponent {
 
     @Input() title: string
     @Input() elementId: string
+    @Input() closeOnBodyClick: string = "false"
     @ViewChild('modalContainer') containerElementRef: ElementRef
 
 
     closeModal() {
-        console.log("Hm?")
-        this.$(this.containerElementRef.nativeElement).modal('hide')
+        if (this.closeOnBodyClick.toLocaleLowerCase() === "true") {
+            this.$(this.containerElementRef.nativeElement).modal('hide')
+        }
     }
 
     constructor(@Inject(JQ_TOKEN) private $:any) {
