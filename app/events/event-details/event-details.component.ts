@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { EventService, ISession } from '../shared/index'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 import {  } from ''
 
 @Component({
@@ -23,9 +23,16 @@ export class EventDetailsComponent implements OnInit  {
     }
 
     ngOnInit(){
-        let id = + this.activatedRoute.snapshot.params['id']
-        //TREVIS!  The goofy plus converts the value to a number
-        this.event = this.eventService.getEvent(id)
+        
+        //In order to re-reoute to this page from this page with a new id, you need to subscribe to the parameter's to be notified when the parameter changes!
+        this.activatedRoute.params.forEach((params: Params) => {
+            console.log("Paramz: " + params)
+            this.event = this.eventService.getEvent(+params['id'])
+            this.addMode = false
+        })
+        //I dont understand what is going on above with this callback.  Why is the for each necessary?
+
+        
     }
 
     addSession(){
