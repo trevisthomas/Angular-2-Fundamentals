@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
-
-
 import {
     EventsListComponent,
     EventThumbnailComponent,
@@ -15,7 +13,9 @@ import {
     CreateEventComponent,
     CreateSessionComponent,
     SessionListComponent,
-    DurationPipe
+    DurationPipe,
+    UpvoteComponent,
+    VoterService
 } from './events/index'
 
 import { EventsAppComponent } from './events-app.component'
@@ -55,7 +55,8 @@ declare let jQuery: Object
         CollapsibleWell,
         DurationPipe,
         SimpleModalComponent,
-        ModalTriggerDirective
+        ModalTriggerDirective,
+        UpvoteComponent
     ],
     providers: [
         EventService, 
@@ -75,6 +76,7 @@ declare let jQuery: Object
         }
         ,
         AuthService, //Notie that services providers can be registered at the app level even if they are defined in a sub module.  Note that this is only true for providers, not imports or declarations
+        VoterService
     ],
     bootstrap: [EventsAppComponent]
 })

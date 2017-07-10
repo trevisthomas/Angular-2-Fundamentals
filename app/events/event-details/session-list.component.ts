@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core'
 import { ISession } from '../shared/index'
-
+import { AuthService } from '../../user/auth.service'
+import { VoterService } from './voter.service'
 
 @Component({
 
@@ -15,11 +16,31 @@ export class SessionListComponent implements OnChanges {
     @Input() sortBy: string
     visibleSessions: ISession[] = []
 
+    constructor(private authService: AuthService,  private voterService: VoterService) {
+
+    } 
+
     ngOnChanges(){
         if(this.sessions) { //If we have sessions.  Because this gets fired whenever either input gets changed.  We dont want to apply this unless the sessions are set
             this.filterSessions(this.filterBy)
             this.sortSessions(this.sortBy)
         }
+    }
+
+    toggleVote(session: ISession) {
+        if (this.userHasVoted(session)) {
+            this.voterService.deleteVoter(session, this.authService.currentUser.userName)
+        } else {
+            this.voterService.addVoter(session, this.authService.currentUser.userName)
+        }
+
+        if(this.sortBy === 'votes') {
+            this.visibleSessions.sort(sortByVotesDesc);
+        }
+    }
+
+    userHasVoted(session: ISession){
+        return this.voterService.userHasVoted(session, this.authService.currentUser.userName);
     }
 
     filterSessions(filter: string){
