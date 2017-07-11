@@ -23,7 +23,10 @@
       <input (ngModel)="price" name="price" required id="eventPrice" type="text" type="number" class="form-control" placeholder="event price..." />
     </div>
     
-    <div ngModelGroup="location">
+    <div ngModelGroup="location" #locationGroup="ngModelGroup" validateLocation>
+        <em *ngIf="locationGroup?.invalid && (locationGroup?.touched)">
+          You must provide either an address or a URL
+        </em>
         <div class="form-group">
         <label for="address">Event Location:</label>
         <input (ngModel)="address" name="address" id="address" type="text" class="form-control" placeholder="Address of event..." />
@@ -40,7 +43,7 @@
 
     <div class="form-group">
       <label for="onlineUrl">Online Url:</label>
-      <input (ngModel)="onlineUrl" name="onlineUrl" id="onlineUrl" type="text" class="form-control" placeholder="Online Url..." />
+      <input (change)="locationGroup.control.controls.address.updateValueAndValidity()" (ngModel)="onlineUrl" name="onlineUrl" id="onlineUrl" type="text" class="form-control" placeholder="Online Url..." />
     </div>
     
     <div class="form-group" [ngClass]="{'error': newEventForm.controls.imageUrl?.invalid && newEventForm.controls.imageUrl?.touched}">
@@ -53,7 +56,7 @@
 
     </div>
     
-    <button type="submit" class="btn btn-primary">Save</button>
-    <button type="button" [disabled]="newEventForm.invalid" class="btn btn-default" (click)="cancel()">Cancel</button>
+    <button type="submit" [disabled]="newEventForm.invalid" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
   </form>
 </div>
