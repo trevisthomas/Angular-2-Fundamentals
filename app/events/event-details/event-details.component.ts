@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { EventService, ISession } from '../shared/index'
+import { EventService, ISession, IEvent } from '../shared/index'
 import { ActivatedRoute, Params } from '@angular/router'
-import {  } from ''
 
 @Component({
     templateUrl: '/app/events/event-details/event-details.component.html',
@@ -25,12 +24,20 @@ export class EventDetailsComponent implements OnInit  {
     ngOnInit(){
         
         //In order to re-reoute to this page from this page with a new id, you need to subscribe to the parameter's to be notified when the parameter changes!
-        this.activatedRoute.params.forEach((params: Params) => {
-            this.event = this.eventService.getEvent(+params['id'])
-            this.addMode = false
-        })
-        //I dont fully understand what is going on above with this callback.  Why is the for each necessary?
+        // this.activatedRoute.params.forEach((params: Params) => {
 
+        //     this.event = this.activatedRoute.snapshot.data['event']
+        //     this.addMode = false
+
+        // })
+
+        //This fixes the bug that causes the page not to reload when opening a new event in search
+        this.activatedRoute.data.forEach((data: Object) => {
+
+            this.event = data['event']
+            this.addMode = false
+
+        })
         
     }
 

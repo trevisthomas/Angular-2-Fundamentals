@@ -1,21 +1,28 @@
 import { Injectable, EventEmitter } from '@angular/core'
 import { Subject, Observable } from 'rxjs/RX'
 import { IEvent, ISession } from './event.model'
+import { Http, Response } from '@angular/http'
 
 @Injectable()
 export class EventService {
+
+    constructor(private http: Http) {
+        
+    }
+
     getEvents(): Observable<[IEvent]>{
         console.log('getEvents called')
 
-        let subject = new Subject<[IEvent]>() //An observable from rxjs
-        setTimeout(() => { subject.next(EVENTS); subject.complete(); } , 100)
-
-        return subject
+        return this.http.get("/api/events").map((response: Response)=>{
+            return <[IEvent]> response.json();
+        }).catch(this.handleError)
     }
 
-    getEvent(id: Number): IEvent{
-        //Hm.  Closure syntax in TS?
-        return EVENTS.find(event => event.id === id)
+    getEvent(id: Number): Observable<IEvent>{
+        console.log("The ID: " + id)
+        return this.http.get("/api/events/"+id).map((response: Response)=>{
+            return <IEvent> response.json();
+        }).catch(this.handleError)
     }
 
     saveEvent(event: IEvent) {
@@ -50,6 +57,10 @@ export class EventService {
         }, 100)
 
         return emitter 
+    }
+
+    private handleError(error: Response) {
+        return Observable.throw(error.statusText)
     }
 }
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
+import { HttpModule } from '@angular/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import {
@@ -8,8 +9,9 @@ import {
     EventThumbnailComponent,
     EventService,
     EventDetailsComponent,
-    EventRouteActivator,
     EventListResolver,
+    // EventRouteActivator,
+    EventResolver,
     CreateEventComponent,
     CreateSessionComponent,
     SessionListComponent,
@@ -42,7 +44,7 @@ declare let jQuery: Object
     imports: [
         BrowserModule,
         RouterModule.forRoot(appRoutes),
-        FormsModule, ReactiveFormsModule],
+        FormsModule, ReactiveFormsModule, HttpModule],
         
     declarations: [
         EventsAppComponent,
@@ -68,16 +70,17 @@ declare let jQuery: Object
             useValue: toastr
         },
         { provide: JQ_TOKEN, useValue: jQuery}, 
-        EventRouteActivator,
-        {
-            provide: 'canDeactivateCreateEvent',
-            useValue: checkDirtyState
-        },
         { //Note! This long hand way allows you to return a different class instance than the Provide.  He gave an example of using a specific logger, like FileLogger
             provide: EventListResolver,
             useClass: EventListResolver
-        }
-        ,
+        }, 
+        // EventRouteActivator,
+        // {
+        //     provide: 'canDeactivateCreateEvent',
+        //     useValue: checkDirtyState
+        // },
+
+        EventResolver,
         AuthService, //Notie that services providers can be registered at the app level even if they are defined in a sub module.  Note that this is only true for providers, not imports or declarations
         VoterService
     ],

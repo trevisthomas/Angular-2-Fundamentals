@@ -12,7 +12,7 @@ export class EventListResolver implements Resolve<any> {
     resolve(){
 
         //Notice that the argument to map is a closure that takes a list of events and returns it.
-        return this.eventService.getEvents().map(events => events)
+        return this.eventService.getEvents()
 
     }
 }
