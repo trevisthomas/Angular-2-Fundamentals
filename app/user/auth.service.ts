@@ -32,6 +32,29 @@ export class AuthService {
        return !!this.currentUser
    }
 
+   checkAuthenticationStatus(){
+    console.log('Checking for current identity')
+    //Trevis, what if you just used the response and checked to see if it's json is truthy instead of treating this like 'any'?
+       return this.http.get('/api/currentIdentity').map((response: any) => {
+           console.log("Response is: " + response.json())
+           if(response._body){
+               console.log("I have someting ")
+            return response.json()
+           } else {
+               console.log("I have nothing")
+               return {}
+           }
+           
+       }).do(currentUser => {
+           if(!!currentUser.userName) {
+               console.log("I think that i'm logged in")
+               this.currentUser = currentUser
+           } else {
+               console.log("I'm not logged in")
+           }
+       }).subscribe()
+   }
+
    updateCurrentUser(firstName: string, lastName: string) {
        this.currentUser.firstName = firstName
        this.currentUser.lastName = lastName
