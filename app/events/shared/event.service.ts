@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core'
 import { Subject, Observable } from 'rxjs/RX'
 import { IEvent, ISession } from './event.model'
-import { Http, Response } from '@angular/http'
+import { Http, Response, RequestOptions, Headers } from '@angular/http'
 
 @Injectable()
 export class EventService {
@@ -25,11 +25,16 @@ export class EventService {
         }).catch(this.handleError)
     }
 
-    saveEvent(event: IEvent) {
-        event.id = 999
-        event.sessions = []
-        EVENTS.push(event)
+    saveEvent(event: IEvent): Observable<IEvent> {
+        
+        let headers = new Headers({'Content-Type': 'application/json'})
+        let options = new RequestOptions({ headers: headers})
         console.log("Saving: " + event)
+
+        return this.http.post('/api/events', 
+            JSON.stringify(event), options).map((response: Response) => {
+                return response.json
+        }).catch(this.handleError)
     }
 
     updateEvent(event) {
@@ -37,26 +42,11 @@ export class EventService {
         EVENTS[index] = event        
     }
 
-    searchSessions(searchTerm: string) {
-        var term = searchTerm.toLowerCase()
-        var results: ISession[] = []
-        EVENTS.forEach(event => {
-            var matchingSessions = event.sessions.filter( 
-                session => session.name.toLocaleLowerCase().indexOf(term) > -1)
-
-            //He's adding a new field to the session. It's a quick hack since session didnt have EventId
-            matchingSessions = matchingSessions.map((session:any) => {
-                session.eventId = event.id
-                return session
-            })    
-            results = results.concat( matchingSessions )
-        })
-        var emitter = new EventEmitter(true)
-        setTimeout(() => {
-            emitter.emit(results)
-        }, 100)
-
-        return emitter 
+    searchSessions(searchTerm: string): Observable<Object> {
+       console.log("Searching for: " + searchTerm)
+        return this.http.get("/api/sessions/search?search="+searchTerm).map((response: Response)=>{
+            return response.json();  //Without a type, it's just a JS object
+        }).catch(this.handleError)
     }
 
     private handleError(error: Response) {
