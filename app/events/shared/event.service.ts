@@ -42,7 +42,7 @@ export class EventService {
         EVENTS[index] = event        
     }
 
-    searchSessions(searchTerm: string): Observable<Object> {
+    searchSessions(searchTerm: string): Observable<any> {
        console.log("Searching for: " + searchTerm)
         return this.http.get("/api/sessions/search?search="+searchTerm).map((response: Response)=>{
             return response.json();  //Without a type, it's just a JS object

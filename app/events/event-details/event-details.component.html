@@ -48,6 +48,6 @@
     <!--ah ha! I think that the $event is the data that is being passed into the event emmtiter.  Just an unfortunately confusing name in our project since we have an event object.-->
     <create-session *ngIf="addMode" (saveNewSession)="performSaveNewSession($event)" (cancel)="performCancel()"></create-session>
   
-    <session-list *ngIf="!addMode" [sessions]="event?.sessions" [filterBy]=filterBy [sortBy]=sortBy></session-list>
+    <session-list *ngIf="!addMode" [eventId]="event?.id" [sessions]="event?.sessions" [filterBy]=filterBy [sortBy]=sortBy></session-list>
   
 </div>
