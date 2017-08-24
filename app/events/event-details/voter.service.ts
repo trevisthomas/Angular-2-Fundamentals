@@ -21,7 +21,7 @@ export class VoterService{
 
         let url = `/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`
 
-        this.http.delete(url, options).subscribe()
+        this.http.delete(url, options).catch(this.handleError).subscribe()
     }
 
     addVoter(eventId: number, session: ISession, voterName: string) {
